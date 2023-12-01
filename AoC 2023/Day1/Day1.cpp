@@ -9,11 +9,11 @@ int main() {
     ifstream myfile("input2.txt", ios::in | ios::binary | ios::ate);
     streampos size;
     char* memblock;
-    int* numbers = new int[2];
-    // int result = 0;
+    char* numbers = new char[2];
+    int result = 0;
 
     if (myfile.is_open()) {
-        fill_n(numbers, 2, -1);
+        fill_n(numbers, 2, NULL);
         size = myfile.tellg();
         memblock = new char[size];
         myfile.seekg(0, ios::beg);
@@ -31,18 +31,20 @@ int main() {
 
             if (number > 0 && number <= 9) {
                 // printf("Found number\n");
-                if (numbers[0] == -1) {
-                    printf("Found number %i and am adding it to the array \n",
-                           number);
-                    numbers[0] = number;
+                if (numbers[0] == NULL) {
+                    // printf("Found number %i and am adding it to the array
+                    // \n",
+                    //        number);
+                    numbers[0] = letter;
                     // atoi(&memblock[i]);
                 }
-                numbers[1] = number;
+                numbers[1] = letter;
             }
             if (letter == '\n') {
                 //* Reset num array & calculate new result
-                printf("Resetting num array\n");
-                fill_n(numbers, 2, -1);
+                printf("Numbers to add together: %c", numbers[0] + numbers[1]);
+                // result += atoi(numbers[0] + numbers[1]);
+                fill_n(numbers, 2, NULL);
             }
         }
         delete[] memblock;
