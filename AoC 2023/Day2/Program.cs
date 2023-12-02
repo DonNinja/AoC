@@ -10,8 +10,14 @@
                 { "blue", 14 },
             };
 
+            Dictionary<string, int> blockTotals = new Dictionary<string, int>() {
+                { "red", 0 },
+                { "green", 0 },
+                { "blue", 0 },
+            };
 
             int result = 0;
+            int blockResult = 0;
 
             foreach (string line in data) {
                 bool add = true;
@@ -34,16 +40,27 @@
                         if (total > blockMaxes[colour]) {
                             add = false;
                         }
+                        if (total > blockTotals[colour]) {
+                            blockTotals[colour] = total;
+                        }
                     }
                 }
                 if (add) {
                     //Console.WriteLine(string.Format("Game {0} will be added", gameNumber));
                     result += gameNumber;
                 }
+                int bT = 1;
+                foreach (KeyValuePair<string, int> block in blockTotals) {
+                    bT *= block.Value;
+                    blockTotals[block.Key] = 0;
+                }
+
+                blockResult += bT;
             }
 
             Console.WriteLine(string.Format("The total result of games that have been added are: {0}", result));
 
+            Console.WriteLine(string.Format("Block result will become: {0}", blockResult));
         }
     }
 }
