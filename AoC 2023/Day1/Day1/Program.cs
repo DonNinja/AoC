@@ -16,6 +16,7 @@ namespace Day1 {
             foreach (string line in data) {
                 foreach (char letter in line) {
                     word += letter;
+                    // You see, I do this instead of int.parse, then I use int.parse later in the code
                     int num = letter - '0';
                     if (num > 0 && num <= 9) {
                         Fill(letter, ref number, ref word);
@@ -33,8 +34,8 @@ namespace Day1 {
                 }
                 string together = number[0].ToString() + number[1].ToString();
 
-                //Console.WriteLine(string.Format("Number to add will be {0}", together));
-
+                
+                // I use int.parse here, why? good question
                 results += int.Parse(together);
 
                 // Reset everything
