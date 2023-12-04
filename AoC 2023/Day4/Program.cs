@@ -1,8 +1,11 @@
 ﻿string filepath = "E:\\OneDrive\\Projects\\Advent-of-Code\\AoC 2023\\Day4\\input.txt";
 string[] data = File.ReadAllLines(filepath);
 
+
 int result = 0;
 int gameNo = 0;
+
+// Amount of copies for each of the future cards
 List<int> copies = new();
 int copyResult = 0;
 
@@ -18,17 +21,21 @@ foreach (var line in data) {
 
     HashSet<int> winners = new();
 
+    // Remove first 2 items, they'll always be "Game" "n:" where n is the game number
     winningNumbers.RemoveRange(0, Math.Min(2, winningNumbers.Count));
 
+    // Removes all empty instances in the lists
     winningNumbers.RemoveAll(n => n == "");
     myNumbers.RemoveAll(n => n == "");
 
+    // Go through the winning numbers and add it to a hash set
     foreach (string item in winningNumbers) {
         if (int.TryParse(item, out int n)) {
             winners.Add(n);
         }
     }
 
+    // Finds the amount of copies the current card has
     int loops = 1;
 
     if (copies.Count > 0) {
@@ -36,9 +43,7 @@ foreach (var line in data) {
         copies.RemoveAt(0);
     }
 
-    //Console.WriteLine(string.Format("Game {0} has {1} copies", gameNo, loops - 1));
-
-    //for (int i = 0; i < loops; i++) {
+    // Go through each number in the numbers that I have
     foreach (string item in myNumbers) {
         if (int.TryParse(item, out int n) && winners.Contains(n)) {
             if (alreadyFound) {
@@ -57,14 +62,11 @@ foreach (var line in data) {
             }
 
             count++;
-            //Console.WriteLine(string.Format("Found a winning number: {0}", n));
         }
-        //}
     }
 
     result += currentScore;
     copyResult += loops;
-    //Console.WriteLine();
 }
 
 Console.WriteLine(result);
