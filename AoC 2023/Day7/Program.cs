@@ -51,6 +51,7 @@
 
             //Console.WriteLine();
 
+            // We can differentiate the different types based on the unique cards in the hand
             switch (cards.Count) {
                 case 5:
                     //! This is only a high card hand
