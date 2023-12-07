@@ -19,8 +19,9 @@
                 int bid = int.Parse(handSplit[1]);
 
                 //Console.WriteLine(bid);
-                GetTypeStrength(hand);
+                Console.WriteLine(GetTypeStrength(hand));
             }
+            //Console.WriteLine();
         }
 
         /// <summary>
@@ -44,33 +45,55 @@
                 return 1;
             }
 
-            foreach (KeyValuePair<char, int> item in cards) {
-                Console.WriteLine($"Card: {item.Key} | Amount: {item.Value}");
-            }
+            //foreach (KeyValuePair<char, int> item in cards) {
+            //    Console.WriteLine($"Card: {item.Key} | Amount: {item.Value}");
+            //}
 
-            Console.WriteLine();
+            //Console.WriteLine();
 
             switch (cards.Count) {
                 case 5:
+                    //! This is only a high card hand
+
                     return 1;
 
                 case 4:
+                    //! This is only a single pair
+
                     return 2;
 
                 case 3:
-                    break;
+                    //! This case includes both two pair, and three of a kind
+
+                    foreach (KeyValuePair<char, int> item in cards) {
+                        //Console.WriteLine($"Card: {item.Key} | Amount: {item.Value}");
+                        if (item.Value == 3) {
+                            return 4;
+                        }
+                    }
+
+                    return 3;
 
                 case 2:
-                    break;
+                    //! This case includes both 
+
+                    foreach (KeyValuePair<char, int> item in cards) {
+                        //Console.WriteLine($"Card: {item.Key} | Amount: {item.Value}");
+                        if (item.Value == 4) {
+                            return 6;
+                        }
+                    }
+
+                    return 5;
 
                 case 1:
-                    return 99999;
+                    //! This will always be five of a kind, or the highest value hand
+
+                    return 7;
 
                 default:
                     return 0;
             }
-
-            return 0;
         }
     }
 }
