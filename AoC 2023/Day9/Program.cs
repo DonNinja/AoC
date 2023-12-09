@@ -1,6 +1,4 @@
-﻿using System.Text.RegularExpressions;
-
-namespace Day9 {
+﻿namespace Day9 {
     internal class Program {
         static void Main(string[] args) {
             string filepath = "E:\\OneDrive\\Projects\\Advent-of-Code\\AoC 2023\\Day9\\input.txt";
@@ -9,6 +7,7 @@ namespace Day9 {
             int result = 0;
             int loop = 0;
 
+            // This really should be done with recursion
             foreach (var line in data) {
                 loop++;
 
