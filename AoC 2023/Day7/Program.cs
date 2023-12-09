@@ -1,27 +1,77 @@
 ﻿namespace Day7 {
     internal class Program {
+        class Hand {
+            public string cards;
+            public int bid;
+            public int strength;
 
-        static Dictionary<char, int> cardStrength = new() {
-                                            {'T', 10 },
-                                            {'J', 11 },
-                                            {'Q', 12 },
-                                            {'K', 13 },
-                                            {'A', 14 },
-                                        };
+            public Hand(string cards, int bid, int strength) {
+                this.cards = cards;
+                this.bid = bid;
+                this.strength = strength;
+            }
+        }
+
+
+        static Dictionary<string, int> cardStrength = new() {
+                {"T", 10 },
+                {"J", 11 },
+                {"Q", 12 },
+                {"K", 13 },
+                {"A", 14 },
+            };
 
         static void Main(string[] args) {
-            string filepath = "E:\\OneDrive\\Projects\\Advent-of-Code\\AoC 2023\\Day7\\input2.txt";
+            List<Hand> handValueList = new();
+            string filepath = "E:\\OneDrive\\Projects\\Advent-of-Code\\AoC 2023\\Day7\\input.txt";
             string[] data = File.ReadAllLines(filepath);
 
             foreach (string line in data) {
+                bool addedHand = false;
+
                 string[] handSplit = line.Split(" ");
                 string hand = handSplit[0];
                 int bid = int.Parse(handSplit[1]);
 
                 //Console.WriteLine(bid);
-                Console.WriteLine(GetTypeStrength(hand));
+                int strength = GetTypeStrength(hand);
+
+                Hand handValue = new(hand, bid, strength);
+
+                for (int i = 0; i < handValueList.Count; i++) {
+                    int comparisonStrength = handValueList[i].strength;
+                    string comparisonHand = handValueList[i].cards;
+
+                    if (comparisonStrength > handValue.strength) {
+                        addedHand = true;
+                        handValueList.Insert(i, handValue);
+
+                        break;
+                    }
+                    else if (comparisonStrength == handValue.strength) {
+                        if (!IsStronger(handValue.cards, comparisonHand)) {
+                            addedHand = true;
+                            handValueList.Insert(i, handValue);
+                            break;
+                        }
+                    }
+
+                }
+
+                if (!addedHand) {
+                    handValueList.Add(handValue);
+                }
             }
-            //Console.WriteLine();
+
+            int result = 0;
+
+            for (int i = 0; i < handValueList.Count; i++) {
+                Hand item = handValueList[i];
+                result += item.bid * (i + 1);
+                Console.WriteLine($"{item.cards} | {item.bid} | {item.strength}");
+            }
+
+            Console.WriteLine(result);
         }
 
         /// <summary>
@@ -95,6 +145,28 @@
                 default:
                     return 0;
             }
+        }
+
+        static bool IsStronger(string currentHand, string comparisonHand) {
+            for (int i = 0; i < currentHand.Length; i++) {
+                string currentCard = currentHand[i].ToString();
+                string comparisonCard = comparisonHand[i].ToString();
+
+                int currentCardValue = 0;
+                int comparisonCardValue = 0;
+
+                if (int.TryParse(currentCard, out currentCardValue)) { }
+                else currentCardValue = cardStrength[currentCard];
+
+                if (int.TryParse(comparisonCard, out comparisonCardValue)) { }
+                else comparisonCardValue = cardStrength[comparisonCard];
+
+                if (currentCardValue != comparisonCardValue) {
+                    return currentCardValue > comparisonCardValue;
+                }
+            }
+
+            return false;
         }
     }
 }
