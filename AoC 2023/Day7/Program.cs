@@ -67,8 +67,11 @@
 
             for (int i = 0; i < handValueList.Count; i++) {
                 Hand item = handValueList[i];
-                result += item.bid * (i + 1);
-                Console.WriteLine($"{item.cards} | {item.bid} | {item.strength}");
+                int calc = item.bid * (i + 1);
+
+                result += calc;
+                //Console.WriteLine($"{item.cards} | {item.bid} | {item.strength}");
+                Console.WriteLine($"\tCalculation {item.bid} * {i + 1} results in: {calc}");
             }
 
             Console.WriteLine(result);
@@ -82,7 +85,15 @@
         static int GetTypeStrength(string hand) {
             Dictionary<char, int> cards = new();
 
+            //bool foundJack = false;
+            int jackCount = 0;
+
             foreach (char card in hand) {
+                if (card == 'J') {
+                    jackCount++;
+                    continue;
+                }
+
                 if (cards.TryGetValue(card, out int value)) {
                     cards[card] = ++value;
                 }
@@ -91,13 +102,28 @@
                 }
             }
 
-            if (cards.Count == 5) {
-                return 1;
+            KeyValuePair<char, int> strongestCard = new();
+            foreach (KeyValuePair<char, int> item in cards) {
+                if (strongestCard.Equals(new KeyValuePair<char, int>())) {
+                    strongestCard = item;
+                }
+                else if (strongestCard.Value > item.Value) {
+                    strongestCard = item;
+                }
+                else if (strongestCard.Value == item.Value) {
+                    int cardValue = GetCardValue(strongestCard.Value.ToString());
+                    int comparisonCardValue = GetCardValue(item.Key.ToString());
+
+                    if (cardValue > comparisonCardValue) strongestCard = item;
+                }
             }
 
-            //foreach (KeyValuePair<char, int> item in cards) {
-            //    Console.WriteLine($"Card: {item.Key} | Amount: {item.Value}");
-            //}
+            if (!strongestCard.Equals(new KeyValuePair<char, int>())) {
+                cards[strongestCard.Key] += jackCount;
+            }
+            else {
+                cards['J'] = 5;
+            }
 
             //Console.WriteLine();
 
@@ -152,14 +178,9 @@
                 string currentCard = currentHand[i].ToString();
                 string comparisonCard = comparisonHand[i].ToString();
 
-                int currentCardValue = 0;
-                int comparisonCardValue = 0;
+                int currentCardValue = GetCardValue(currentCard);
+                int comparisonCardValue = GetCardValue(comparisonCard);
 
-                if (int.TryParse(currentCard, out currentCardValue)) { }
-                else currentCardValue = cardStrength[currentCard];
-
-                if (int.TryParse(comparisonCard, out comparisonCardValue)) { }
-                else comparisonCardValue = cardStrength[comparisonCard];
 
                 if (currentCardValue != comparisonCardValue) {
                     return currentCardValue > comparisonCardValue;
@@ -167,6 +188,11 @@
             }
 
             return false;
+        }
+
+        static int GetCardValue(string card) {
+            if (int.TryParse(card, out int comparisonCardValue)) return comparisonCardValue;
+            return cardStrength[card];
         }
     }
 }
