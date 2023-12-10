@@ -4,7 +4,7 @@ using System.Text.RegularExpressions;
 namespace Day1 {
     internal class Program {
         static void Main(string[] args) {
-            string filepath = "E:\\OneDrive\\Projects\\Advent-of-Code\\AoC 2023\\Day1\\input.txt";
+            string filepath = "E:\\OneDrive\\Projects\\Advent-of-Code\\AoC-2023\\Day1\\input.txt";
             string[] data = File.ReadAllLines(filepath);
             Regex numRegex = new Regex("0-9");
             char[] number = new char[2] { 'a', 'a' };

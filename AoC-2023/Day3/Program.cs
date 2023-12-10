@@ -5,7 +5,7 @@ namespace Day3 {
         public static Regex symbolRegex = new Regex(@"\W");
 
         static void Main(string[] args) {
-            string filepath = "E:\\OneDrive\\Projects\\Advent-of-Code\\AoC 2023\\Day3\\input.txt";
+            string filepath = "E:\\OneDrive\\Projects\\Advent-of-Code\\AoC-2023\\Day3\\input.txt";
             string[] data = File.ReadAllLines(filepath);
             Regex numRegex = new(@"0-9");
             bool foundNumber = false;
