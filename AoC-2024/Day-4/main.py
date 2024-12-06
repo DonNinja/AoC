@@ -35,3 +35,5 @@ for i in range(len(lines)):
                         results += 1
 
 print(results)
+
+data.close()
