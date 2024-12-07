@@ -21,6 +21,9 @@ def iterate(
         to calculate all possible permutations with
         the operators we can use
     """
+    
+    if resultValue > testValue:
+        return False
 
     for i in range(1, len(intValues)):
         values = (intValues[i - 1], intValues[i])
@@ -28,8 +31,6 @@ def iterate(
         for op in operators:
             equation += " {} {}".format(op, intValues[i])
             evalValue = evaluate(values, op)
-            # if evalValue > resultValue:
-            #     return False
             newValues = [evalValue] + intValues[i + 1 :]
             if iterate(newValues, testValue, equation, evalValue):
                 return True
