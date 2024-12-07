@@ -15,7 +15,7 @@ for line in data:
     sLine = line.strip()
     
     testValue, calcValues = sLine.split(":")
-    intValues = [int(x) for x in calcValues.strip().split(" ")]
+    floatValues = [float(x) for x in calcValues.strip().split(" ")]
     
     pass
 
