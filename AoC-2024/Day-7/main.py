@@ -1,22 +1,54 @@
-data = open("AoC-2024/Day-7/testinput.txt", "r")
+data = open("AoC-2024/Day-7/input", "r")
 
-operators = ["*", "+"]
+operators = ["*", "+", "||"]
 
-def evaluate(values, operator):
+
+def evaluate(values: tuple[int], operator: str) -> int:
     if operator == "*":
         return values[0] * values[1]
     elif operator == "+":
         return values[0] + values[1]
-    
+    elif operator == "||":
+        return int("{}{}".format(int(values[0]), int(values[1])))
+
     return 0
-    pass
+
+
+def iterate(
+    intValues: list[int], testValue: int, equation: str, resultValue: int = 0
+) -> bool:
+    for i in range(1, len(intValues)):
+        values = (intValues[i - 1], intValues[i])
+
+        for op in operators:
+            equation += " {} {}".format(op, intValues[i])
+            evalValue = evaluate(values, op)
+            newValues = [evalValue] + intValues[i + 1 :]
+            if iterate(newValues, testValue, equation, evalValue):
+                return True
+
+        # By this point, we have 
+        return False
+
+    if resultValue == testValue:
+        # print("{} | {}".format(testValue, equation))
+        return True
+    return False
+
+
+results = 0
 
 for line in data:
     sLine = line.strip()
-    
+
     testValue, calcValues = sLine.split(":")
-    floatValues = [float(x) for x in calcValues.strip().split(" ")]
-    
-    pass
+    intValues = [int(x) for x in calcValues.strip().split(" ")]
+
+    testValue = int(testValue)
+
+    if iterate(intValues, testValue, str(intValues[0])):
+        results += int(testValue)
+
+print(results)
 
 data.close()
