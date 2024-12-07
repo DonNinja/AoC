@@ -17,17 +17,24 @@ def evaluate(values: tuple[int], operator: str) -> int:
 def iterate(
     intValues: list[int], testValue: int, equation: str, resultValue: int = 0
 ) -> bool:
+    """ Recursively iterates through the given values
+        to calculate all possible permutations with
+        the operators we can use
+    """
+
     for i in range(1, len(intValues)):
         values = (intValues[i - 1], intValues[i])
 
         for op in operators:
             equation += " {} {}".format(op, intValues[i])
             evalValue = evaluate(values, op)
+            # if evalValue > resultValue:
+            #     return False
             newValues = [evalValue] + intValues[i + 1 :]
             if iterate(newValues, testValue, equation, evalValue):
                 return True
 
-        # By this point, we have 
+        # By this point, we have already gone through all possible iterations and we know it won't be true
         return False
 
     if resultValue == testValue:
