@@ -60,19 +60,29 @@ for i in range(len(locations)):
             vector: Position = currPos - checkPos
 
             newCurrLoc = currPos + vector
-            newCheckLoc = checkPos + (-vector)
-
             currCheckY = newCurrLoc.y < len(locMap) and newCurrLoc.y >= 0
             currCheckX = newCurrLoc.x < len(locMap[0]) and newCurrLoc.x >= 0
+            
+            
 
-            if currCheckY and currCheckX:
+            while currCheckY and currCheckX:
                 locMap[newCurrLoc.y][newCurrLoc.x] = "#"
 
+                newCurrLoc = newCurrLoc + vector
+                currCheckY = newCurrLoc.y < len(locMap) and newCurrLoc.y >= 0
+                currCheckX = newCurrLoc.x < len(locMap[0]) and newCurrLoc.x >= 0
+
+
+            newCheckLoc = checkPos + (-vector)
             checkCheckY = newCheckLoc.y < len(locMap) and newCheckLoc.y >= 0
             checkCheckX = newCheckLoc.x < len(locMap[0]) and newCheckLoc.x >= 0
 
-            if checkCheckX and checkCheckY:
+            while checkCheckX and checkCheckY:                
                 locMap[newCheckLoc.y][newCheckLoc.x] = "#"
+
+                newCheckLoc = newCheckLoc + (-vector)
+                checkCheckY = newCheckLoc.y < len(locMap) and newCheckLoc.y >= 0
+                checkCheckX = newCheckLoc.x < len(locMap[0]) and newCheckLoc.x >= 0
 
         pass
     pass
@@ -81,7 +91,7 @@ results = 0
 
 for line in locMap:
     for char in line:
-        if char == "#":
+        if char != ".":
             results += 1
         print(char, end="")
     print()
