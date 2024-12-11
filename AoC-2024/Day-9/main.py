@@ -44,7 +44,7 @@ for i in range(len(filesystemLine) - 1, -1, -1):
             # filesystemLine = filesystemLine[:j] + x + filesystemLine[j+1:i]
             break
         pass
-    
+
 results = 0
 
 for i in range(len(filesystemLine)):
