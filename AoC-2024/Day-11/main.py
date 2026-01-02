@@ -24,7 +24,7 @@ initial = data.readline().strip()
 
 stoneList = initial.split(" ")
 
-for i in range(25):
+for i in range(50):
     stoneList = evolve(stoneList)
 
     # for stone in stoneList:
