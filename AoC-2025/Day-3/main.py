@@ -7,29 +7,28 @@ results = 0
 # print(batteryArray)
 
 for line in data:
+    batteryArray = [0] * 12
     line = line.strip()
     # print(line)
     formerMax, latterMax = 0, 0
     formerIndex = 0
-    for i in range(len(line) - 1):
-        currBattery = int(line[i])
-        if currBattery > formerMax:
-            formerMax = currBattery
-            formerIndex = i
-            if currBattery == 9:
-                break
+    for b in range(len(batteryArray)):
+        currMaxIndex = len(line) - (len(batteryArray) - 1 - b)
+        for i in range(formerIndex, currMaxIndex):
+            currBattery = int(line[i])
+            if currBattery > batteryArray[b]:
+                batteryArray[b] = currBattery
+                formerIndex = i + 1
+                if currBattery == 9:
+                    break
 
-    for l in range(formerIndex + 1, len(line)):
-        currBattery = int(line[l])
-        if currBattery > latterMax:
-            latterMax = currBattery
-            if currBattery == 9:
-                break
+    maxBattery = ""
 
-    maxBattery = int(str(formerMax) + str(latterMax))
-    results += maxBattery
+    for battery in batteryArray:
+        maxBattery += str(battery)
+
+    results += int(maxBattery)
 
     # print(maxBattery)
-    # print()
 
 print(results)
