@@ -2,23 +2,27 @@ data = open("AoC-2025\\Day-3\\input.txt", "r")
 
 results = 0
 
-# batteryArray = [0] * 2
-
-# print(batteryArray)
-
 for line in data:
+    # A dynamic array for battery allocation
     batteryArray = [0] * 12
+
     line = line.strip()
-    # print(line)
-    formerMax, latterMax = 0, 0
+
+    # Save where the former battery found its max number
     formerIndex = 0
-    for b in range(len(batteryArray)):
-        currMaxIndex = len(line) - (len(batteryArray) - 1 - b)
+
+    # Iterate through all the batteries
+    for batteryIndex in range(len(batteryArray)):
+        # Calculate how far the current battery is allowed to look
+        maxIndexOffset = len(batteryArray) - 1 - batteryIndex
+        currMaxIndex = len(line) - maxIndexOffset
+
         for i in range(formerIndex, currMaxIndex):
             currBattery = int(line[i])
-            if currBattery > batteryArray[b]:
-                batteryArray[b] = currBattery
+            if currBattery > batteryArray[batteryIndex]:
+                batteryArray[batteryIndex] = currBattery
                 formerIndex = i + 1
+                # If the current battery has a power of 9, we can't add a bigger number to the current index
                 if currBattery == 9:
                     break
 
