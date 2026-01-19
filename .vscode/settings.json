@@ -2,5 +2,6 @@
     "dotnet.preferCSharpExtension": true,
     "files.associations": {
         "istream": "cpp"
-    }
+    },
+    "python.REPL.enableREPLSmartSend": false
 }
