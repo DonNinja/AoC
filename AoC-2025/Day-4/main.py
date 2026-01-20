@@ -1,17 +1,15 @@
-data = open("AoC-2025\\Day-4\\testinput.txt", "r")
+data = open("AoC-2025\\Day-4\\input.txt", "r")
 
 results = 0
 
 dataArray = data.readlines()
-paperToRemove = 1
 
-while paperToRemove > 0:
-    paperToRemove = 0
+while True:
+    removalLocations = []
 
     for l in range(len(dataArray)):
         line = dataArray[l].strip()
         # print(line)
-        removalLocations = []
         for i in range(len(line)):
             if line[i] == "@":
                 tooMany = False
@@ -39,15 +37,25 @@ while paperToRemove > 0:
                         break
 
                 if not tooMany:
-                    # paperToRemove += 1
-                    removalLocations.append((yLoc, xLoc))
+                    removalLocations.append((l, i))
                     results += 1
-                        # print(dataArray[l + y][i + x], end="")
+                    # print(dataArray[l + y][i + x], end="")
                     # print()
                 # print(line[i], end="")
             # print()
 
         # print()
+    if len(removalLocations) > 0:
+        for y, x in removalLocations:
+            tempString = ""
+            for i in range(len(dataArray[y])):
+                if (i == x):
+                    tempString += "."
+                else:
+                    tempString += dataArray[y][i]
+            dataArray[y] = tempString
+    else:
+        break
 
 
 print(results)
