@@ -4,6 +4,8 @@ results = 0
 
 dataArray = data.readlines()
 
+data.close()
+
 while True:
     # Create a list of locations to remove toilet paper from
     removalLocations = []
