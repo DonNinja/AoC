@@ -1,4 +1,4 @@
-file = open("AoC-2025\\Day-6\\input.txt", "r")
+file = open("AoC-2025\\Day-6\\testinput.txt", "r")
 
 results = 0
 
@@ -10,9 +10,13 @@ calcArray = []
 
 for line in data:
     entries = line.strip().split()
+
+    # Fill the array with empty lists
     if len(calcArray) == 0:
         for _ in range(len(entries)):
             calcArray.append([])
+        
+    #Populate those empty lists with the entries
     for i in range(len(entries)):
         calcArray[i].append(entries[i])
 
@@ -30,4 +34,5 @@ for calc in calcArray:
                 total *= int(calc[c])
     results += total
 
-print(results)
+# print(results)
+print(calcArray)
