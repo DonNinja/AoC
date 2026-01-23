@@ -26,14 +26,24 @@ while len(tachyonLocations) > 0:
     if currLoc[1] == len(diagramMatrix) - 1:
         continue
     downPos = diagramMatrix[currLoc[1] + 1][currLoc[0]]
-    
-    if downPos == ".":
-        tachyonLocations.append((currLoc[0], currLoc[1] + 1))
-    elif downPos == "^":
 
-        if tachyonLocations:
-            tachyonLocations.append((currLoc[0] - 1, currLoc[1] + 1))
-        tachyonLocations.append((currLoc[0] + 1, currLoc[1] + 1))
+    if downPos == "^":
+        for i in range(-1, 2, 2):
+            try:
+                tachyonLocations.index((currLoc[0] + i, currLoc[1] + 1))
+            except ValueError:
+                tachyonLocations.append((currLoc[0] + i, currLoc[1] + 1))
+                diagramMatrix[currLoc[1] + 1][currLoc[0] + i] = "|"
         results += 1
+
+    else:
+        if diagramMatrix[currLoc[1] + 1][currLoc[0]] != "|":
+            diagramMatrix[currLoc[1] + 1][currLoc[0]] = "|"
+            tachyonLocations.append((currLoc[0], currLoc[1] + 1))
+
+# for l in diagramMatrix:
+#     for c in l:
+#         print(c, end="")
+#     print()
 
 print(results)
