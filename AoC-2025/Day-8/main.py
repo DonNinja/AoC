@@ -43,30 +43,8 @@ for line in data:
     pointArray.append(currPoint)
 
 for point in pointArray:
-    if point.isConnected():
-        continue
-
-    # print(point)
-    circuit = [point]
-
-    while True:
-            shortestDist = (math.inf, None)
-            for p in pointArray:
-                for c in circuit:
-                    if p == c:
-                        continue
-                    if p - c < shortestDist[0]:
-                        shortestDist = (p - c, p)
-
-            closestPoint = shortestDist[1]
-
-            if closestPoint in circuit or closestPoint.isConnected():
-                break
-            else:
-                circuit.append(closestPoint)
-                closestPoint.connect(c)
-
-    circuitArray.append(circuit)
+    
+    pass
 
 for i in range(len(circuitArray)):
     print("CIRCUIT {0}".format(i))
