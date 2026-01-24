@@ -6,7 +6,7 @@ class Location:
         self.x = x
         self.y = y
         self.z = z
-        self._connection = None
+        self._connection: Location = None
 
     def __sub__(self, other):
         xDist = (self.x - other.x) ** 2
@@ -16,12 +16,15 @@ class Location:
 
     def __str__(self):
         return "X: {0}, Y: {1}, Z: {2}".format(self.x, self.y, self.z)
-    
+
+    def connect(self, other):
+        self._connection = other
+
     def isConnected(self):
         return self._connection != None
 
 
-file = open("AoC-2025\\Day-8\\testinput.txt", "r")  
+file = open("AoC-2025\\Day-8\\testinput.txt", "r")
 
 results: int = 0
 
@@ -35,13 +38,41 @@ circuitArray = []
 
 for line in data:
     x, y, z = line.strip().split(",")
-    
-    point = Location(int(x), int(y), int(z))
-    pointArray.append(point)
 
-while len(pointArray) > 0:
-    point = pointArray(0)
-    
+    currPoint = Location(int(x), int(y), int(z))
+    pointArray.append(currPoint)
+
+for point in pointArray:
+    if point.isConnected():
+        continue
+
+    # print(point)
+    circuit = [point]
+
+    while True:
+            shortestDist = (math.inf, None)
+            for p in pointArray:
+                for c in circuit:
+                    if p == c:
+                        continue
+                    if p - c < shortestDist[0]:
+                        shortestDist = (p - c, p)
+
+            closestPoint = shortestDist[1]
+
+            if closestPoint in circuit or closestPoint.isConnected():
+                break
+            else:
+                circuit.append(closestPoint)
+                closestPoint.connect(c)
+
+    circuitArray.append(circuit)
+
+for i in range(len(circuitArray)):
+    print("CIRCUIT {0}".format(i))
+    for c in circuitArray[i]:
+        print(c)
     pass
 
-print(results)
+
+# print(results)
