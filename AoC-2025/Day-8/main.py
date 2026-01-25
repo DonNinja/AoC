@@ -34,7 +34,7 @@ file.close()
 
 pointArray: list[Location] = []
 
-circuitArray = []
+circuitArray: list[list] = []
 
 for line in data:
     x, y, z = line.strip().split(",")
@@ -43,11 +43,19 @@ for line in data:
     pointArray.append(currPoint)
 
 for point in pointArray:
+    closestPoint = (math.inf, None)
+    for otherPoint in pointArray:
+        if point - otherPoint < closestPoint[0] and otherPoint != point:
+            closestPoint = (point - otherPoint, otherPoint)
+
+    foundCircuit = False
+
+    # print("Closest point to {0} is {1}".format(point, closestPoint[1]))
     
-    pass
+
 
 for i in range(len(circuitArray)):
-    print("CIRCUIT {0}".format(i))
+    print("CIRCUIT {0} of size {1}".format(i, len(circuitArray[i])))
     for c in circuitArray[i]:
         print(c)
     pass
