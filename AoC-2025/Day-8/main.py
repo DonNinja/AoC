@@ -48,9 +48,7 @@ for point in pointArray:
         if point - otherPoint < closestPoint[0] and otherPoint != point:
             closestPoint = (point - otherPoint, otherPoint)
 
-    foundCircuit = False
-
-    # print("Closest point to {0} is {1}".format(point, closestPoint[1]))
+    print("Closest point to {0} is {1}".format(point, closestPoint[1]))
     
 
 
